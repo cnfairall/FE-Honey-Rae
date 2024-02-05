@@ -48,8 +48,22 @@ Form {
 div {
   display: flex;
   flex-direction: column;
+  
 }
 
 h2 {
   margin-left: 50px;
+}
+
+Table {
+  margin-right: 50px;
+  margin-left: 50px;
+}
+
+.add-btn {
+  width: 100px;
+  align-self: center;
+  margin: 20px;
+  background-color: white!important;
+  color: black!important;
 }
