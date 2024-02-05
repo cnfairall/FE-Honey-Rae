@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Table } from "reactstrap";
+import { Button, Table } from "reactstrap";
 import { getTicketById } from "../../data/serviceTicketsData";
 import { Link } from "react-router-dom";
 
@@ -18,8 +18,9 @@ export default function TicketDetails() {
 
   return (
     <>
-      <Link to="/tickets/create">Add</Link>
-
+      <Button className="add-btn">
+        <Link to="/tickets/create">Add</Link>
+      </Button>
       <Table>
         <tbody>
           <tr>

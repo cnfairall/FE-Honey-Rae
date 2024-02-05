@@ -1,19 +1,27 @@
 import { useEffect, useState } from "react";
-import { Table } from "reactstrap";
+import { Button, Table } from "reactstrap";
 import { getServiceTickets } from "../../data/serviceTicketsData";
 import { Link } from "react-router-dom";
+import { deleteTicket } from "../../data/serviceTicketsData";
 
 export default function TicketsList() {
   const [tickets, setTickets] = useState([]);
 
+  const deleteATicket = (id) => {
+    deleteTicket(id).then(() => {
+      getServiceTickets().then(setTickets)
+    })
+  };
+
   useEffect(() => {
     getServiceTickets().then(setTickets);
-  }, []);
+  }, [tickets]);
 
   return (
     <>
-      <Link to="/tickets/create">Add</Link>
-
+      <Button className="add-btn">
+        <Link to="/tickets/create">Add</Link>
+      </Button>
       <Table>
         <thead>
           <tr>
@@ -33,6 +41,9 @@ export default function TicketsList() {
               <td>{t.dateCompleted?.split("T")[0] || "Incomplete"}</td>
               <td>
                 <Link to={`${t.id}`}>Details</Link>
+              </td>
+              <td>
+                <Button onClick={() => deleteATicket(t.id)}>Delete</Button>
               </td>
             </tr>
           ))}

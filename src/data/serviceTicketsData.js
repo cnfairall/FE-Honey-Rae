@@ -19,3 +19,16 @@ export const createTicket = (payload) => new Promise((resolve, reject) => {
     .then((data) => resolve(data))
     .catch(reject);
 });
+
+export const deleteTicket = async (id) => {
+  const response = await fetch(`${_apiUrl}/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to Delete");
+  }
+};
