@@ -6,16 +6,11 @@ import { getTicketById, updateTicket } from "../../data/serviceTicketsData";
 import { Link } from "react-router-dom";
 import { getEmployees } from "../../data/employeeData";
 
-// const initialState = {
-//   employeeId: null
-// }
-
 export default function TicketDetails() {
   const { id } = useParams();
 
   const [ticket, setTicket] = useState(null);
   const [employees, setEmployees] = useState([]);
-  const [formInput, setFormInput] = useState(null);
 
   useEffect(() => {
     getTicketById(id).then(setTicket);
