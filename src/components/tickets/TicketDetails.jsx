@@ -1,19 +1,37 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Table } from "reactstrap";
-import { getTicketById } from "../../data/serviceTicketsData";
+import { Form } from "react-bootstrap";
+import { getTicketById, updateTicket } from "../../data/serviceTicketsData";
 import { Link } from "react-router-dom";
+import { getEmployees } from "../../data/employeeData";
+
+// const initialState = {
+//   employeeId: null
+// }
 
 export default function TicketDetails() {
   const { id } = useParams();
 
   const [ticket, setTicket] = useState(null);
+  const [employees, setEmployees] = useState([]);
+  const [formInput, setFormInput] = useState(null);
 
   useEffect(() => {
     getTicketById(id).then(setTicket);
-  }, [id]);
+    getEmployees().then(setEmployees);
+  }, [id, ticket]);
   if (!ticket) {
     return null;
+  }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const payload = {
+      ...ticket,
+      [name]: value,
+    };
+    updateTicket(id, payload)
   }
 
   return (
@@ -37,7 +55,25 @@ export default function TicketDetails() {
           </tr>
           <tr>
             <th scope="row">Employee</th>
-            <td>{ticket.employee?.name || "Unassigned"}</td>
+            <td>
+              {ticket.employee?.name || (
+                <Form>
+                  <Form.Select
+                    name="employeeId"
+                    className="mb-3"
+                    aria-label="employee id select"
+                    onChange={handleChange}
+                  >
+                    <option value="">Select Employee Id</option>
+                    {employees.map((e) => (
+                      <option key={`employee-${e.id}`} value={e.id}>
+                        {e.id} : {e.name}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Form>
+              )}
+            </td>
           </tr>
           <tr>
             <th scope="row">Completed?</th>

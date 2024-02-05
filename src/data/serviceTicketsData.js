@@ -45,3 +45,17 @@ export const completeTicket = async (id) => {
       throw new Error("Failed to complete");
     }
 };
+
+export const updateTicket = async (id, payload) => {
+  const response = await fetch(`${_apiUrl}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update");
+  }
+};
