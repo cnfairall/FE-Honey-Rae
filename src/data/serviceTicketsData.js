@@ -29,6 +29,19 @@ export const deleteTicket = async (id) => {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to Delete");
+    throw new Error("Failed to delete");
   }
+};
+
+export const completeTicket = async (id) => {
+    const response = await fetch(`${_apiUrl}/${id}/complete`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  
+    if (!response.ok) {
+      throw new Error("Failed to complete");
+    }
 };
