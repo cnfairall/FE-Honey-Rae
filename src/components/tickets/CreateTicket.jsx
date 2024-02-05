@@ -4,6 +4,7 @@ import { getEmployees } from "../../data/employeeData";
 import { useEffect, useState } from "react";
 import { Button } from "reactstrap";
 import { createTicket } from "../../data/serviceTicketsData";
+import { useNavigate } from "react-router";
 
 const initialState = {
   customerId: -1,
@@ -16,11 +17,11 @@ export default function CreateTicket() {
   const [customers, setCustomers] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [formInput, setFormInput] = useState(initialState);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getEmployees().then(setEmployees);
     getCustomers().then(setCustomers);
-    // if (ticketObj.id) setFormInput(ticketObj);
   }, []);
 
   const handleChange = (e) => {
@@ -34,11 +35,10 @@ export default function CreateTicket() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (ticketObj.id) {
-    //   updateTicket(formInput);
-    // } else {
       const payload = formInput;
-      createTicket(payload);
+      createTicket(payload).then(() => {
+        navigate("/tickets");
+      })
     }
 
     return (
